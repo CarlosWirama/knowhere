@@ -1,35 +1,43 @@
 import React, { Component } from 'react';
-import { Input, Button } from '@material-ui/core';
 import styled from 'styled-components';
-import * as Text from './constants/uiTexts';
+import InputSection from './modules/InputSection';
+import RouteOptionsSection from './modules/RouteOptionsSection';
 
-class App extends Component {
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      startingStation: '',
+      destinationStation: '',
+      routeOptions: [3,9,0],
+    }
+  }
+
+  onSubmit() {
+    const { startingStation, destinationStation } = this.state;
+    fetch(startingStation, destinationStation);
+  }
+
   render() {
+    const {
+      routeOptions,
+      startingStation,
+      destinationStation
+    } = this.state;
     return (
       <React.Fragment>
-        <header className="App-header">
+        <header>
           Header
         </header>
         <Home>
-          <Section>
-            <InputField>
-              <TitleText>
-                Starting station
-              </TitleText>
-              <StationInput placeholder={Text.SEARCH_PLACEHOLDER}/>
-            </InputField>
-
-            <InputField>
-              <TitleText>
-                Destination station
-              </TitleText>
-              <StationInput placeholder={Text.SEARCH_PLACEHOLDER}/>
-            </InputField>
-
-            <Button variant="contained" fullWidth color="primary">
-              Go
-            </Button>
-          </Section>
+          <InputSection
+            startingStation={startingStation}
+            destinationStation={destinationStation}
+            onSubmit={this.onSubmit}
+          />
+          { routeOptions.length > 0 &&
+            <RouteOptionsSection routeOptions={routeOptions} />
+          }
         </Home>
       </React.Fragment>
     );
@@ -43,27 +51,3 @@ const Home = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
-
-const TitleText = styled.div`
-  text-align: left;
-  font-weight: bold;
-  margin: 16px 0;
-`;
-
-const StationInput = styled(Input)`
-  width: calc(100% - 16px);
-  border: solid gray .2px;
-  padding: 8px;
-`;
-
-const InputField = styled.div`
-  width: 70vw;
-  margin: 48px auto;
-`;
-
-const Section = styled.div`
-  background-color: lightblue;
-  padding: 16px;
-`;
-
-export default App;
