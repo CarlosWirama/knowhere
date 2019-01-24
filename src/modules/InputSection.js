@@ -4,40 +4,79 @@ import styled from 'styled-components';
 import { Input, Button } from '@material-ui/core';
 import * as Text from '../constants/uiTexts';
 
-export default function InputSection(props) {
-  return (
-    <Container>
-      <InputField>
-        <TitleText>
-          Starting station
-        </TitleText>
-        <StationInput
-          value={props.startingStation}
-          placeholder={Text.SEARCH_PLACEHOLDER}
-        />
-      </InputField>
+export default class InputSection extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      startingStation: '',
+      destinationStation: '',
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
-      <InputField>
-        <TitleText>
-          Destination station
-        </TitleText>
-        <StationInput
-          value={props.destinationStation}
-          placeholder={Text.SEARCH_PLACEHOLDER}
-        />
-      </InputField>
+  onChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
+  
+  onSubmit() {
+    const { startingStation, destinationStation } = this.state;
+    this.props.submitAction(startingStation, destinationStation);
+  }
 
-      <PrimaryButton fullWidth onClick={props.onSubmit}>
-        Go
-      </PrimaryButton>
-    </Container>
-  );
+  render() {
+    return (
+      <Container>
+        <InputField
+          label="Starting station"
+          name="startingStation"
+          onChange={this.onChange}
+          value={this.state.startingStation}
+          collapsed={this.props.collapsed}
+        />
+        <InputField
+          label="Destination station"
+          name="destinationStation"
+          onChange={this.onChange}
+          value={this.state.destinationStation}
+          collapsed={this.props.collapsed}
+        />
+        { !this.props.collapsed &&
+          <PrimaryButton fullWidth onClick={this.onSubmit}>
+            Go
+          </PrimaryButton>
+        }
+      </Container>
+    );
+  }
 }
 
+function InputField(props) {
+  return(
+    <InputFieldContainer collapsed={props.collapsed}>
+      <InputFieldText>
+        <Label>
+          {props.label}
+        </Label>
+        { props.collapsed ? <span>{props.value}</span> : '' }
+      </InputFieldText>
+      { props.collapsed ?
+        ''
+      :
+        <StationInput
+          name={props.name}
+          value={props.value}
+          onChange={props.onChange}
+          placeholder={Text.SEARCH_PLACEHOLDER}
+        />
+      }
+    </InputFieldContainer>
+  );
+}
 InputSection.propTypes = {
-  startingStation: PropTypes.string.isRequired,
-  destinationStation: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  submitAction: PropTypes.func.isRequired,
+  collapsed: PropTypes.bool,
 }
 
 const Container = styled.div`
@@ -45,9 +84,14 @@ const Container = styled.div`
   padding: 32px 16px;
 `;
 
-const TitleText = styled.div`
+const Label = styled.div`
   text-align: left;
   font-weight: bold;
+`;
+
+const InputFieldText = styled.div`
+  display: flex;
+  justify-content: space-between;
   margin: 8px 0;
 `;
 
@@ -57,10 +101,10 @@ const StationInput = styled(Input)`
   padding: 8px;
 `;
 
-const InputField = styled.div`
+const InputFieldContainer = styled.div`
   width: 70vw;
   margin: 0 auto;
-  padding-bottom: 32px;
+  padding-bottom: ${props => props.collapsed ? '8px' : '32px'};
 `;
 
 const PrimaryButton = styled(Button).attrs({
