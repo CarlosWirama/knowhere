@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { List, ListSubheader } from '@material-ui/core';
 import OptionExpandable from './OptionExpandable';
+import * as Text from '../../constants/uiTexts';
 
-export default class RouteOptionsSection extends React.Component {
+export default class RoutesSection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      expandedIndex: null,
+      expandedIndex: 0,
     };
   }
 
@@ -23,7 +24,7 @@ export default class RouteOptionsSection extends React.Component {
   render() {
     return (
       <Container>
-        <List subheader={<ListSubheader>Nested List Items</ListSubheader>}>
+        <List subheader={<ListSubheader>{Text.LIST_HEADER}</ListSubheader>}>
           {this.props.routeOptions.map((option, i) =>
             <OptionExpandable
               option={option}
@@ -38,7 +39,7 @@ export default class RouteOptionsSection extends React.Component {
   }
 }
 
-RouteOptionsSection.propTypes = {
+RoutesSection.propTypes = {
   routeOptions: PropTypes.array.isRequired,
 }
 

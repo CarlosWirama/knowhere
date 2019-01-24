@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import InputSection from './modules/InputSection';
-import RouteOptionsSection from './modules/RouteOptionsSection';
+import RoutesSection from './modules/RoutesSection';
 
 export default class App extends Component {
   constructor(props) {
@@ -9,7 +9,41 @@ export default class App extends Component {
     this.state = {
       startingStation: '',
       destinationStation: '',
-      routeOptions: [3,9,0],
+      routeOptions: [
+        {
+          lines: 'EW-NS-CC',
+          stopCount: 8,
+          interchangeCount: 2,
+          steps: [
+            {
+              line: 'EW',
+              destination: 'City Hall',
+              stopCount: 1, 
+            },
+            {
+              line: 'NS',
+              destination: 'Bishan',
+              stopCount: 5, 
+            },
+            {
+              line: 'CC',
+              destination: 'Caldecott',
+              stopCount: 2, 
+            }
+          ]
+        },
+        {
+          lines: 'EW',
+          stopCount: 10,
+          steps: [
+            {
+              line: 'EW',
+              destination: 'Clementi',
+              stopCount: 10, 
+            },
+          ]
+        }
+      ],
     }
   }
 
@@ -36,7 +70,7 @@ export default class App extends Component {
             onSubmit={this.onSubmit}
           />
           { routeOptions.length > 0 &&
-            <RouteOptionsSection routeOptions={routeOptions} />
+            <RoutesSection routeOptions={routeOptions} />
           }
         </Home>
       </React.Fragment>
@@ -45,9 +79,8 @@ export default class App extends Component {
 }
 
 const Home = styled.div`
-  text-align: center;
-  display: flex;
-  height: 100vh;
-  flex-direction: column;
-  justify-content: center;
+  // display: flex;
+  // height: 100vh;
+  // flex-direction: column;
+  // justify-content: center;
 `;
