@@ -36,16 +36,18 @@ stationNames.forEach(name => {
   });
 });
 
-export default stationNames.map(name => {
+const stationWithAdjacent = {};
+stationNames.forEach(name => {
   const stationCode = stations[name];
   const groupedCode = groupSimilarCodes(stationCode);
   const adjacent = findAdjacent(stationCode);
-  return {
-    name,
+  stationWithAdjacent[name] = {
     line: Object.keys(groupedCode),
     adjacent,
   };
 });
+
+export default stationWithAdjacent;
 
 function findAdjacent(stationCode) {
   const adjacent = [];
@@ -53,7 +55,7 @@ function findAdjacent(stationCode) {
     const stationNo = stationCode[lineCode];
     adjacent.push(...findAdjacentInLine(lineCode, stationNo));
   });
-  adjacent.push(...findSpecialAdjacent(stationCode));
+  // adjacent.push(...findSpecialAdjacent(stationCode));
   return adjacent;
 }
 
@@ -62,17 +64,17 @@ function findAdjacentInLine(line, no) {
   const prevStation = currentLinePtr[no - 1] || currentLinePtr[no - 2];
   const nextStation = currentLinePtr[no + 1] || currentLinePtr[no + 2];
   const ret = [];
-  prevStation && ret.push({ name: prevStation, line });
-  nextStation && ret.push({ name: nextStation, line });
+  prevStation && ret.push(prevStation);
+  nextStation && ret.push(nextStation);
   return ret;
 }
 
-function findSpecialAdjacent() {
-  // TODO: special adjacent, for example:
-  // 'Gek Poh' JW1 is adjacent with 'Bahar Junction' JS7
-  // please see Jurong Area MRT
-  return [];
-}
+// function findSpecialAdjacent() {
+//   // TODO: special adjacent, for example:
+//   // 'Gek Poh' JW1 is adjacent with 'Bahar Junction' JS7
+//   // please see Jurong Area MRT
+//   return [];
+// }
 
 function groupSimilarCodes(codes) {
   if (codes.CC && codes.CC === codes.CE) {

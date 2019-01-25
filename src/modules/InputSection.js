@@ -25,6 +25,8 @@ export default class InputSection extends React.PureComponent {
     this.props.submitAction(startingStation, destinationStation);
   }
 
+  setDestinationInputRef = ref => this.destInput = ref;
+
   render() {
     return (
       <Container>
@@ -34,6 +36,7 @@ export default class InputSection extends React.PureComponent {
           onChange={this.onChange}
           value={this.state.startingStation}
           collapsed={this.props.collapsed}
+          onKeyPress={e => e.key === 'Enter' && this.destInput.focus()}
         />
         <InputField
           label="Destination station"
@@ -41,6 +44,8 @@ export default class InputSection extends React.PureComponent {
           onChange={this.onChange}
           value={this.state.destinationStation}
           collapsed={this.props.collapsed}
+          setRef={this.setDestinationInputRef}
+          onKeyPress={e => e.key === 'Enter' && this.onSubmit()}
         />
         { !this.props.collapsed &&
           <PrimaryButton fullWidth onClick={this.onSubmit}>
@@ -69,6 +74,8 @@ function InputField(props) {
           value={props.value}
           onChange={props.onChange}
           placeholder={Text.SEARCH_PLACEHOLDER}
+          onKeyPress={props.onKeyPress}
+          inputRef={props.setRef}
         />
       }
     </InputFieldContainer>
@@ -109,7 +116,7 @@ const InputFieldContainer = styled.div`
 
 const PrimaryButton = styled(Button).attrs({
   variant: 'contained',
-  color: 'primary'
+  color: 'primary',
 })`
   height: 48px;
 `;
