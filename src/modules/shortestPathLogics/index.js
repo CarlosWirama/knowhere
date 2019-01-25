@@ -1,5 +1,10 @@
+import dijkstra from './dijkstra';
+import stationMap from './initializeData';
+console.log(stationMap)
+
 export default function findShortestRoute(startingStation, destinationStation) {
-  console.log(startingStation, destinationStation);
+  console.log(stationMap)
+  dijkstra(stationMap, startingStation, destinationStation);
   return [
     {
       lines: 'EW-NS-CC',

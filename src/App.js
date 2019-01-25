@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import findShortestRoute from './modules/dijkstra';
+import findShortestRoute from './modules/shortestPathLogics';
 import InputSection from './modules/InputSection';
 import RoutesSection from './modules/RoutesSection';
 
