@@ -29,7 +29,7 @@ export default class InputSection extends React.PureComponent {
 
   render() {
     return (
-      <Container>
+      <Container onClick={this.props.onClick}>
         <InputField
           label="Starting station"
           name="startingStation"

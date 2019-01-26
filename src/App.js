@@ -9,19 +9,18 @@ export default class App extends Component {
     super(props);
     this.state = {
       routeOptions: [],
+      isInputCollapsed: false,
     };
     this.onSearch = this.onSearch.bind(this);
   }
 
   onSearch(start, end) {
     const routeOptions = findShortestRoute(start, end);
-    this.setState({ routeOptions });
+    this.setState({ routeOptions, isInputCollapsed: true });
   }
 
   render() {
-    const {
-      routeOptions,
-    } = this.state;
+    const { routeOptions, isInputCollapsed } = this.state;
     const hasResult = (routeOptions.length > 0);
     return (
       <React.Fragment>
@@ -29,7 +28,11 @@ export default class App extends Component {
           Header
         </header>
         <Home>
-          <InputSection submitAction={this.onSearch} collapsed={hasResult} />
+          <InputSection
+            collapsed={isInputCollapsed}
+            submitAction={this.onSearch}
+            onClick={() => this.setState({ isInputCollapsed: false })}
+          />
           { hasResult &&
             <RoutesSection routeOptions={routeOptions} />
           }

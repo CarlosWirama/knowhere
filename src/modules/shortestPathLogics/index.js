@@ -3,40 +3,32 @@ import stationMap from './initializeData';
 
 console.log(stationMap)
 export default function findShortestRoute(startingStation, destinationStation) {
-  console.log('dijkstra', dijkstra(stationMap, startingStation, destinationStation));
-  return [
-    {
-      lines: 'EW-NS-CC',
-      stopCount: 8,
-      interchangeCount: 2,
-      steps: [
-        {
-          line: 'EW',
-          destination: 'City Hall',
-          stopCount: 1, 
-        },
-        {
-          line: 'NS',
-          destination: 'Bishan',
-          stopCount: 5, 
-        },
-        {
-          line: 'CC',
-          destination: 'Caldecott',
-          stopCount: 2, 
-        }
-      ]
-    },
-    {
-      lines: 'EW',
-      stopCount: 10,
-      steps: [
-        {
-          line: 'EW',
-          destination: 'Clementi',
-          stopCount: 10, 
-        },
-      ]
+  const shortestPath = dijkstra(stationMap, startingStation, destinationStation);
+  console.log('shortestPath', shortestPath);
+  const route = {
+    lines: [],
+    stopCount: shortestPath.length,
+    interchangeCount: -1,
+    steps: [],
+  };
+  let previousLine = '';
+  const path = [...shortestPath];
+  while(path.length) {
+    const { destination, line } = path.pop();
+    if (line !== previousLine) {
+      route.lines.push(line);
+      route.steps.push({
+        line,
+        destination,
+        stopCount: 1,
+      });
+      route.interchangeCount++;
+      previousLine = line;
+    } else {
+      const currentSteps = route.steps[route.steps.length - 1];
+      currentSteps.destination = destination;
+      currentSteps.stopCount++;
     }
-  ];
+  }
+  return [route];
 }

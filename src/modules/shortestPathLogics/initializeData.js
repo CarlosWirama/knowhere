@@ -39,11 +39,10 @@ stationNames.forEach(name => {
 const stationWithAdjacent = {};
 stationNames.forEach(name => {
   const stationCode = stations[name];
-  const groupedCode = groupSimilarCodes(stationCode);
-  const adjacent = findAdjacent(stationCode);
+  // const groupedCode = groupSimilarCodes(stationCode);
   stationWithAdjacent[name] = {
-    line: Object.keys(groupedCode),
-    adjacent,
+    line: Object.keys(stationCode),
+    adjacent: findAdjacent(stationCode),
   };
 });
 
@@ -64,8 +63,8 @@ function findAdjacentInLine(line, no) {
   const prevStation = currentLinePtr[no - 1] || currentLinePtr[no - 2];
   const nextStation = currentLinePtr[no + 1] || currentLinePtr[no + 2];
   const ret = [];
-  prevStation && ret.push(prevStation);
-  nextStation && ret.push(nextStation);
+  prevStation && ret.push({ name: prevStation, line });
+  nextStation && ret.push({ name: nextStation, line });
   return ret;
 }
 
