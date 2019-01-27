@@ -4,41 +4,55 @@ export default function dijkstra(graph, startNode, endNode) {
   let destinationReached = false;
   let shortestDistance = 999; // For testing purpose
   do {
+    // TODO: instead of relying on lowest distance,
+    // we can just iterate all the neighbor we have from source node
+    // and then change distances const to be a list of visited nodes
     const currentNodeName = findLowestDistanceNode(distances);
     if(currentNodeName === endNode) {
+      // make threshold to allow searching for less efficient routes
+      // ~3 stops
       destinationReached = true;
       shortestDistance = distances[currentNodeName]; // For testing purpose
     }
     findNeighborNodes(graph, currentNodeName, prevs).forEach(neighbor => {
+      // If you're from Chinatown , you can take either NE-EW or DT-CC to Paya Lebar
+      // then Paya Lebar should store 2 (or more) prevs
+      if (prevs[neighbor.name] === undefined) prevs[neighbor.name] = [];
+      const neighborsPreviousStations = prevs[neighbor.name];
+      const newNeighborsPreviousStation = { name: currentNodeName, line: neighbor.line };
       const neighborDistance = distances[currentNodeName] + 1;
-      if (distances[neighbor.name] !== undefined) {
-        // TODO enable prevs to store more than 1 prevs,
-        // e.g. I'm from Chinatown and can take  NE-EW or DT-CC to Paya Lebar
-        // then Paya Lebar should store 2 (or more) prevs
-        // the condition should allow neighborDistance
-        // with 1-2 more stops than existing stored value
-      } else {
-        distances[neighbor.name] = neighborDistance; // TODO: later we wont need distance
-        prevs[neighbor.name] = { name: currentNodeName, line: neighbor.line };
-      }
+      distances[neighbor.name] = neighborDistance; // TODO: later we wont need distance
+      neighborsPreviousStations.push(newNeighborsPreviousStation);
     });
     delete distances[currentNodeName];
   } while(!destinationReached && Object.keys(prevs).length < 200);
   if (!destinationReached) throw 'Destination not reached'; // For testing
-  // return tracePath(prevs, endNode);
   console.log('prevs', prevs)
-  const path = tracePath(prevs, endNode);
-  if (shortestDistance !== path.length) throw `the result is different from path : Expected ${shortestDistance}. Path: ${path}`; // For testing
-  return path;
+  const builtRoutes = [];
+  const initialPath = [];
+  builtRoutes.push(initialPath);
+  tracePath(prevs, endNode, builtRoutes, initialPath);
+  // if (shortestDistance !== path.length) throw `the result is different from path : Expected ${shortestDistance}. Path: ${path}`; // For testing
+  return builtRoutes;
 }
 
-function tracePath(listOfPrevNodes, destination, builtPath = []) {
-  console.log(`tracePath for :${destination}`, builtPath)
-  const { name, line } = listOfPrevNodes[destination] || {};
-  const updatedPath = builtPath.concat({ destination, line });
-  return name
-    ? tracePath(listOfPrevNodes, name, updatedPath)
-    : builtPath;
+function tracePath(listOfAllPrevNodes, destination, builtRoutes, builtPath) {
+  console.log(`tracePath for: ${destination}`, [...builtPath])
+  const prevs = listOfAllPrevNodes[destination];
+  // if there's no prev left, end the loop;
+  if(!prevs) return;
+  // make a new path for each prev except #1 prev
+  for(let i = 1; i < prevs.length; i++) { // iterate from index = 1
+    const newPath = [...builtPath];
+    const { name, line } = prevs[i];
+    newPath.push({ destination, line });
+    builtRoutes.push(newPath);
+    tracePath(listOfAllPrevNodes, name, builtRoutes, newPath);
+  }
+  // push 1st prev last, to avoid affecting the remaining path
+  const { name, line } = prevs[0];
+  builtPath.push({ destination, line });
+  tracePath(listOfAllPrevNodes, name, builtRoutes, builtPath);
 }
 
 function findLowestDistanceNode(nodeDistances) {
@@ -49,7 +63,10 @@ function findLowestDistanceNode(nodeDistances) {
 
 function findNeighborNodes(graph, currentNodeName, prevs) {
   const { adjacent } = graph[currentNodeName];
-  const { name : previousNodeName } = prevs[currentNodeName] || {};
   // return all neighbor, but dont go back to prev node
-  return adjacent.filter(station => station.name !== previousNodeName);
+  const previousNodes = prevs[currentNodeName] || [];
+  return adjacent.filter(station => // can't use Array.prototype.includes :(
+    previousNodes.filter(prev => prev.name === station.name).length === 0
+    // previousNodes.reduce((result, prev) => result && prev.name !== station.name, true)
+  );
 }

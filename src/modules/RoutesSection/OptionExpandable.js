@@ -8,7 +8,7 @@ import Step from './Step';
 export default function OptionExpandable(props) {
   const { lines, stopCount, interchangeCount } = props.option;
   const stopOverview = `(${stopCount} stops${
-    interchangeCount ? `, 1 interchanges` : ''
+    interchangeCount ? `, ${interchangeCount} interchanges` : ''
   })`;
   return (
     <React.Fragment>
