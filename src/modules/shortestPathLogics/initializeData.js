@@ -39,7 +39,6 @@ stationNames.forEach(name => {
 const stationWithAdjacent = {};
 stationNames.forEach(name => {
   const stationCode = stations[name];
-  // const groupedCode = groupSimilarCodes(stationCode);
   stationWithAdjacent[name] = {
     line: Object.keys(stationCode),
     adjacent: findAdjacent(stationCode),
@@ -52,20 +51,31 @@ function findAdjacent(stationCode) {
   const adjacent = [];
   Object.keys(stationCode).forEach(lineCode => {
     const stationNo = stationCode[lineCode];
-    adjacent.push(...findAdjacentInLine(lineCode, stationNo));
+    findAdjacentInLine(lineCode, stationNo, adjacent);
   });
   // adjacent.push(...findSpecialAdjacent(stationCode));
   return adjacent;
 }
 
-function findAdjacentInLine(line, no) {
-  const currentLinePtr = lines[line];
-  const prevStation = currentLinePtr[no - 1] || currentLinePtr[no - 2];
-  const nextStation = currentLinePtr[no + 1] || currentLinePtr[no + 2];
-  const ret = [];
-  prevStation && ret.push({ name: prevStation, line });
-  nextStation && ret.push({ name: nextStation, line });
-  return ret;
+function findAdjacentInLine(line, no, builtAdjacent) {
+  const stationsinLine = lines[line];
+  let prevStation = stationsinLine[no - 1] || stationsinLine[no - 2];
+  let nextStation = stationsinLine[no + 1] || stationsinLine[no + 2];
+  checkDupicateAndPushAdjacent(builtAdjacent, prevStation);
+  checkDupicateAndPushAdjacent(builtAdjacent, nextStation);
+
+  function checkDupicateAndPushAdjacent(builtAdjacent, newAdjacent) {
+    // before push, check whether we already have this adjacent o'not
+    builtAdjacent.forEach(station => {
+      if(station.name === newAdjacent) {
+        newAdjacent = null;
+        station.line = [line, station.line].sort().join('/');
+        // make the multiple station.line = 'CC/CE', not 'CE/CC'
+      }
+    });
+    newAdjacent && builtAdjacent.push({ name: newAdjacent, line });
+    // if there's no adjacent node, it won't push anything
+  }
 }
 
 // function findSpecialAdjacent() {
@@ -74,13 +84,3 @@ function findAdjacentInLine(line, no) {
 //   // please see Jurong Area MRT
 //   return [];
 // }
-
-function groupSimilarCodes(codes) {
-  if (codes.CC && codes.CC === codes.CE) {
-    // group CC and CE to be CCCE
-    const { CC, CE, ...rest } = codes;
-    return { ...rest, CCCE: CC };
-  } else {
-    return { ...codes };
-  }
-}

@@ -6,7 +6,7 @@ export default function dijkstra(graph, startNode, endNode) {
   do {
     // TODO: instead of relying on lowest distance,
     // we can just iterate all the neighbor we have from source node
-    // and then change distances const to be a list of visited nodes
+    // and then change distances const to be a list of visited nodes (?)
     const currentNodeName = findLowestDistanceNode(distances);
     if(currentNodeName === endNode) {
       // make threshold to allow searching for less efficient routes
@@ -24,10 +24,9 @@ export default function dijkstra(graph, startNode, endNode) {
       distances[neighbor.name] = neighborDistance; // TODO: later we wont need distance
       neighborsPreviousStations.push(newNeighborsPreviousStation);
     });
-    delete distances[currentNodeName];
+    delete distances[currentNodeName]; // dont do this if we want to have some less efficient routes
   } while(!destinationReached && Object.keys(prevs).length < 200);
   if (!destinationReached) throw 'Destination not reached'; // For testing
-  console.log('prevs', prevs)
   const builtRoutes = [];
   const initialPath = [];
   builtRoutes.push(initialPath);
@@ -37,7 +36,6 @@ export default function dijkstra(graph, startNode, endNode) {
 }
 
 function tracePath(listOfAllPrevNodes, destination, builtRoutes, builtPath) {
-  console.log(`tracePath for: ${destination}`, [...builtPath])
   const prevs = listOfAllPrevNodes[destination];
   // if there's no prev left, end the loop;
   if(!prevs) return;

@@ -3,8 +3,9 @@ import stationMap from './initializeData';
 
 console.log(stationMap)
 export default function findShortestRoute(startingStation, destinationStation) {
+  // currently can't connect all MRT line to Jurong lines and all LRTs
   const paths = dijkstra(stationMap, startingStation, destinationStation);
-  console.log('result paths', [...paths]);
+  console.log('result paths', JSON.parse(JSON.stringify(paths)));
   // return paths.map( path => {
   const c =  paths.map( path => {
   const route = {
