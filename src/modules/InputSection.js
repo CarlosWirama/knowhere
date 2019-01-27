@@ -13,6 +13,7 @@ export default class InputSection extends React.PureComponent {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   onChange(e) {
@@ -23,6 +24,12 @@ export default class InputSection extends React.PureComponent {
   onSubmit() {
     const { startingStation, destinationStation } = this.state;
     this.props.submitAction(startingStation, destinationStation);
+  }
+
+  onClick(e) {
+    // don't fire onClick at Container to keep input field closed
+    e.stopPropagation();
+    this.onSubmit();
   }
 
   setDestinationInputRef = ref => this.destInput = ref;
@@ -48,7 +55,7 @@ export default class InputSection extends React.PureComponent {
           onKeyPress={e => e.key === 'Enter' && this.onSubmit()}
         />
         { !this.props.collapsed &&
-          <PrimaryButton fullWidth onClick={this.onSubmit}>
+          <PrimaryButton fullWidth onClick={this.onClick}>
             Go
           </PrimaryButton>
         }
