@@ -122,6 +122,7 @@ const InputFieldContainer = styled.div`
   width: 70vw;
   margin: 0 auto;
   padding-bottom: ${props => props.collapsed ? '8px' : '32px'};
+  transition-duration: 150ms;
 `;
 
 const PrimaryButton = styled(Button).attrs({

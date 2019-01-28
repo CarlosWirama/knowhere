@@ -1,20 +1,25 @@
 ## Project codename: knowhere
-A single page web-app for Singapore MRT Routing (currently only works with future MRT routes)
+A single page web-app for Singapore MRT Routing (currently only works with future MRT routes*)
 Created using Create React App
 
-* currently doesn't support LRT lines and Jurong MRT lines
+(*) doesn't support LRT lines and Jurong MRT lines yet
 
+<br>
 
 Tech-stack:
 - React
 
+<br>
 
 Supporting libraries:
 - styled-components
 - material-ui
 
+<br>
 
 I'm not using Redux (yet) because this app is still small and can be handled by built-in React state manager. I implemented Dijkstra algorithm from scratch (instead of using library from somewhere else) to get a better understanding about how Dijkstra works.
+
+<br>
 
 TODO:
 - Sort route options based on efficiency (currently not sorted at all)
@@ -24,6 +29,7 @@ TODO:
 - Add recent search
 - Add support for LRTs and Jurong MRT lines
 - Welcome Page
+- Fix overlapping line to display properly (e.g. City Hall to Raffles Place)
 
 ## =============== README from Create React App ===============
 

@@ -32,8 +32,8 @@ export default class App extends Component {
       this.setState({ expandedIndex: null });
     } else {
       this.setState({ expandedIndex: index });
+      this.collapseInput();
     }
-    this.collapseInput();
   }
 
   render() {
