@@ -6,21 +6,6 @@ import OptionExpandable from './OptionExpandable';
 import * as Text from '../../constants/uiTexts';
 
 export default class RoutesSection extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      expandedIndex: 0,
-    };
-  }
-
-  expand(index) {
-    if (this.state.expandedIndex === index) {
-      this.setState({ expandedIndex: null });
-    } else {
-      this.setState({ expandedIndex: index });
-    }
-  }
-
   render() {
     return (
       <Container>
@@ -28,8 +13,8 @@ export default class RoutesSection extends React.Component {
           {this.props.routeOptions.map((option, i) =>
             <OptionExpandable
               option={option}
-              expanded={this.state.expandedIndex === i}
-              onClick={() => this.expand(i)}
+              expanded={this.props.expandedIndex === i}
+              onClick={() => this.props.onClickExpandable(i)}
               key={i}
             />
           )}
@@ -44,6 +29,6 @@ RoutesSection.propTypes = {
 }
 
 const Container = styled.div`
-  background-color: lightgreen;
+  // background-color: #fafafa;
   padding: 16px;
 `;

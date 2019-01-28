@@ -6,9 +6,8 @@ export default function findShortestRoute(startingStation, destinationStation) {
   // currently can't connect all MRT line to Jurong lines and all LRTs
   const paths = dijkstra(stationMap, startingStation, destinationStation);
   console.log('result paths', JSON.parse(JSON.stringify(paths)));
-  // return paths.map( path => {
-  const c =  paths.map( path => {
-  const route = {
+  return paths.map( path => {
+    const route = {
       lines: [],
       stopCount: path.length,
       interchangeCount: -1,
@@ -45,9 +44,8 @@ export default function findShortestRoute(startingStation, destinationStation) {
       }
     }
     return route;
+    // TODO: sort based on best route
   });
-  console.log(c)
-  return c;
 }
 
 function addSteps(route, destination) {
@@ -55,6 +53,7 @@ function addSteps(route, destination) {
   currentSteps.destination = destination;
   currentSteps.stopCount++;
 }
+
 function addNewInterchange(route, destination, line) {
   route.lines.push(line);
   route.steps.push({

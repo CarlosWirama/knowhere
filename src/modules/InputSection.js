@@ -68,14 +68,12 @@ function InputField(props) {
   return(
     <InputFieldContainer collapsed={props.collapsed}>
       <InputFieldText>
-        <Label>
+        <Label collapsed={props.collapsed}>
           {props.label}
         </Label>
-        { props.collapsed ? <span>{props.value}</span> : '' }
+        { props.collapsed && <ReadOnlyValue>{props.value}</ReadOnlyValue> }
       </InputFieldText>
-      { props.collapsed ?
-        ''
-      :
+      { !props.collapsed &&
         <StationInput
           name={props.name}
           value={props.value}
@@ -101,6 +99,11 @@ const Container = styled.div`
 const Label = styled.div`
   text-align: left;
   font-weight: bold;
+  ${props => props.collapsed && 'font-size: 13px;'}
+`;
+
+const ReadOnlyValue = styled.span`
+  font-size: 14px;
 `;
 
 const InputFieldText = styled.div`

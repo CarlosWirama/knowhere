@@ -9,8 +9,8 @@ export default function dijkstra(graph, startNode, endNode) {
     // and then change distances const to be a list of visited nodes (?)
     const currentNodeName = findLowestDistanceNode(distances);
     if(currentNodeName === endNode) {
-      // make threshold to allow searching for less efficient routes
-      // ~3 stops
+      // TODO make threshold to allow searching for less efficient routes
+      // e.g. ~3 stops
       destinationReached = true;
       shortestDistance = distances[currentNodeName]; // For testing purpose
     }
