@@ -1,3 +1,26 @@
+## Project codename: knowhere
+A single page web-app for Singapore MRT Routing (currently only works with future MRT routes)
+Created using Create React App
+
+* currently not support LRT lines and Jurong MRT lines
+
+Tech-stack:
+- React
+
+Supporting libraries:
+- styled-components
+- material-ui
+
+TODO:
+- Sort route options based on efficiency (currently not sorted at all)
+- Add suggestion on InputText, validate on wrong station name
+- unit tests
+- Add recent search
+- Add support for LRTs and Jurong MRT lines
+- Welcome Page
+
+## ========================= README from Create React App ==================================
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
