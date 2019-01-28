@@ -2,24 +2,30 @@
 A single page web-app for Singapore MRT Routing (currently only works with future MRT routes)
 Created using Create React App
 
-* currently not support LRT lines and Jurong MRT lines
+* currently doesn't support LRT lines and Jurong MRT lines
+
 
 Tech-stack:
 - React
+
 
 Supporting libraries:
 - styled-components
 - material-ui
 
+
+I'm not using Redux (yet) because this app is still small and can be handled by built-in React state manager. I implemented Dijkstra algorithm from scratch (instead of using library from somewhere else) to get a better understanding about how Dijkstra works.
+
 TODO:
 - Sort route options based on efficiency (currently not sorted at all)
 - Add suggestion on InputText, validate on wrong station name
 - unit tests
+- define component's propTypes
 - Add recent search
 - Add support for LRTs and Jurong MRT lines
 - Welcome Page
 
-## ========================= README from Create React App ==================================
+## =============== README from Create React App ===============
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
