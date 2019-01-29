@@ -1,13 +1,13 @@
 {
-  "main.css": "/knowhere/static/css/main.4fa116b7.chunk.css",
-  "main.js": "/knowhere/static/js/main.a197430d.chunk.js",
-  "main.js.map": "/knowhere/static/js/main.a197430d.chunk.js.map",
-  "static/js/1.b4e51833.chunk.js": "/knowhere/static/js/1.b4e51833.chunk.js",
-  "static/js/1.b4e51833.chunk.js.map": "/knowhere/static/js/1.b4e51833.chunk.js.map",
+  "main.css": "/knowhere/static/css/main.ed6bab91.chunk.css",
+  "main.js": "/knowhere/static/js/main.f03644db.chunk.js",
+  "main.js.map": "/knowhere/static/js/main.f03644db.chunk.js.map",
+  "static/js/1.62d7a4a5.chunk.js": "/knowhere/static/js/1.62d7a4a5.chunk.js",
+  "static/js/1.62d7a4a5.chunk.js.map": "/knowhere/static/js/1.62d7a4a5.chunk.js.map",
   "runtime~main.js": "/knowhere/static/js/runtime~main.2f82e59d.js",
   "runtime~main.js.map": "/knowhere/static/js/runtime~main.2f82e59d.js.map",
-  "static/css/main.4fa116b7.chunk.css.map": "/knowhere/static/css/main.4fa116b7.chunk.css.map",
+  "static/css/main.ed6bab91.chunk.css.map": "/knowhere/static/css/main.ed6bab91.chunk.css.map",
   "index.html": "/knowhere/index.html",
-  "precache-manifest.1c4b3b0be15ac8a6618d5e6183adc791.js": "/knowhere/precache-manifest.1c4b3b0be15ac8a6618d5e6183adc791.js",
+  "precache-manifest.b611b198696d35f7a9b52f99288d4a55.js": "/knowhere/precache-manifest.b611b198696d35f7a9b52f99288d4a55.js",
   "service-worker.js": "/knowhere/service-worker.js"
 }
