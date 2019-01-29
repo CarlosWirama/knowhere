@@ -19,7 +19,7 @@ const lines = {
   BP: [],
 };
 
-const stationNames = Object.keys(stations);
+export const stationNames = Object.keys(stations);
 
 // assign every station to their lines
 stationNames.forEach(name => {

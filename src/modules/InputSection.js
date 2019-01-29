@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Select from 'react-select';
 import styled from 'styled-components';
-import { Input, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import * as Text from '../constants/uiTexts';
+import { stationNames } from './shortestPathLogics/initializeData';
 
 export default class InputSection extends React.PureComponent {
   constructor(props) {
@@ -16,9 +18,10 @@ export default class InputSection extends React.PureComponent {
     this.onClick = this.onClick.bind(this);
   }
 
-  onChange(e) {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
+  onChange(selectedItem, componentProps) {
+    const { value } = selectedItem;
+    const { name: inputName } = componentProps;
+    this.setState({ [inputName]: value });
   }
   
   onSubmit() {
@@ -35,6 +38,7 @@ export default class InputSection extends React.PureComponent {
   setDestinationInputRef = ref => this.destInput = ref;
 
   render() {
+    console.log(this.state)
     return (
       <Container onClick={this.props.onClick}>
         <InputField
@@ -65,6 +69,11 @@ export default class InputSection extends React.PureComponent {
 }
 
 function InputField(props) {
+  const options = stationNames.map(name => ({
+    value: name,
+    label: name,
+  }));
+  const defaultValue = options[stationNames.indexOf(props.value)]
   return(
     <InputFieldContainer collapsed={props.collapsed}>
       <InputFieldText>
@@ -76,7 +85,8 @@ function InputField(props) {
       { !props.collapsed &&
         <StationInput
           name={props.name}
-          value={props.value}
+          options={options}
+          defaultValue={defaultValue}
           onChange={props.onChange}
           placeholder={Text.SEARCH_PLACEHOLDER}
           onKeyPress={props.onKeyPress}
@@ -97,9 +107,9 @@ const Container = styled.div`
 `;
 
 const Label = styled.div`
-  text-align: left;
+  font-size: 13px;
   font-weight: bold;
-  ${props => props.collapsed && 'font-size: 13px;'}
+  text-align: left;
 `;
 
 const ReadOnlyValue = styled.span`
@@ -112,7 +122,7 @@ const InputFieldText = styled.div`
   margin: 8px 0;
 `;
 
-const StationInput = styled(Input)`
+const StationInput = styled(Select)`
   width: calc(100% - 16px);
   border: solid gray .2px;
   padding: 8px;

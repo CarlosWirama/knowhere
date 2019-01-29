@@ -1,24 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { LineBadge, LineContainer } from './LineBadge';
+import { LineBadge } from './LineBadge';
 import { Collapse, List, ListItem, ListItemText } from '@material-ui/core';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import { ExpandLess, ExpandMore, ChevronRight } from '@material-ui/icons';
 import Step from './Step';
 
 export default function OptionExpandable(props) {
   const { lines, stopCount, interchangeCount } = props.option;
   const stopOverview = `${stopCount} stop${stopCount > 1 ? 's' : ''}`;
-  const changeOverview = interchangeCount ? `${interchangeCount} interchanges` : '';
+  const changeOverview = interchangeCount ? `${interchangeCount} int.` : '';
   return (
     <Container expanded={props.expanded}>
       <Option button onClick={props.onClick}>
         <ExpendableHeader>
-          <LineContainer>
-            { lines.map((lineCode, i) =>
-              <LineBadge line={lineCode} key={i} />
-            )}
-          </LineContainer>
+          <LineOverview>
+            { lines.map((lineCode, i) => (
+              <React.Fragment key={i}>
+                <ChevronRight />
+                <LineBadge line={lineCode} />
+              </React.Fragment>
+            ))}
+          </LineOverview>
           <StopOverview>
             <div>{stopOverview}</div>
             <div>{changeOverview}</div>
@@ -61,9 +64,33 @@ const StepsContainer = styled(List)`
 const Option = styled(ListItem)`
 `;
 
+const LineOverview = styled.div`
+  display: flex;
+  overflow: scroll;
+  position: relative;
+  &:before {
+    content:'';
+    width: 100%;
+    height: 100%;    
+    position: absolute;
+    right:0;
+    top:0;
+    background: linear-gradient(to right, transparent 80%, #f1f1f1);
+  }
+  &:after {
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      #f00 100%
+      // rgba(255, 255, 255, 1) 100%
+    );
+  }
+`;
+
 const StopOverview = styled.div`
   font-size: 12px;
   line-height: 1em;
   color: #555;
   text-align: right;
+  white-space: nowrap;
 `;
