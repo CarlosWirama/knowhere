@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select';
-import styled from 'styled-components';
-import { Button } from '@material-ui/core';
-import * as Text from '../constants/uiTexts';
-import { stationNames } from './shortestPathLogics/initializeData';
+import * as Text from '../../constants/uiTexts';
+import InputField from './InputField';
+import { Container, Header, PrimaryButton } from './InputSection.style';
 
 export default class InputSection extends React.PureComponent {
   constructor(props) {
@@ -20,6 +18,7 @@ export default class InputSection extends React.PureComponent {
   }
 
   onChange(selectedItem, componentProps) {
+    console.log('click')
     const { value } = selectedItem;
     const { name: inputName } = componentProps;
     this.setState({ [inputName]: value, error: null });
@@ -45,7 +44,7 @@ export default class InputSection extends React.PureComponent {
     return (
       <Container onClick={this.props.onClick}>
         <Header>
-          Search for MRT routes
+          {Text.HEADER}
         </Header>
         <InputField
           label="Starting station"
@@ -76,88 +75,7 @@ export default class InputSection extends React.PureComponent {
   }
 }
 
-function InputField(props) {
-  const options = stationNames.map(name => ({
-    value: name,
-    label: name,
-  }));
-  const defaultValue = options[stationNames.indexOf(props.value)]
-  return(
-    <InputFieldContainer collapsed={props.collapsed}>
-      <InputFieldText>
-        <Label collapsed={props.collapsed}>
-          {props.label}
-        </Label>
-        { props.collapsed && <ReadOnlyValue>{props.value}</ReadOnlyValue> }
-      </InputFieldText>
-      { !props.collapsed &&
-        <StyledSelect
-          name={props.name}
-          options={options}
-          defaultValue={defaultValue}
-          onChange={props.onChange}
-          placeholder={Text.SEARCH_PLACEHOLDER}
-          onKeyPress={props.onKeyPress}
-          inputRef={props.setRef}
-          error={props.error}
-        />
-      }
-    </InputFieldContainer>
-  );
-}
 InputSection.propTypes = {
   submitAction: PropTypes.func.isRequired,
   collapsed: PropTypes.bool,
 }
-
-const Container = styled.div`
-  background-color: #fffbca;
-  padding: 32px 16px;
-  z-index: 2;
-`;
-
-const Header = styled.h4`
-  margin: 0 0 32px;
-  text-align: center;
-`;
-
-const Label = styled.div`
-  font-size: 13px;
-  font-weight: bold;
-  text-align: left;
-`;
-
-const ReadOnlyValue = styled.span`
-  font-size: 14px;
-`;
-
-const InputFieldText = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 8px 0;
-`;
-
-const InputFieldContainer = styled.div`
-  width: 70vw;
-  margin: 0 auto;
-  padding-bottom: ${props => props.collapsed ? '8px' : '16px'};
-  transition-duration: 150ms;
-`;
-
-const StyledSelect = styled(Select)`
-  div {
-    ${props => props.error && 'border-color: red;'}
-  }
-`;
-
-const PrimaryButton = styled(Button).attrs({
-  variant: 'contained',
-})`
-  && {
-    height: 48px;
-    margin-top: 16px;
-    background-color: #30aabc;
-    color: white;
-    font-weight: bold;
-  }
-`;

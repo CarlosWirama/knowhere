@@ -1,7 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
-import { ListItem, ListItemText } from '@material-ui/core';
-import { LineBadge, LineContainer } from './LineBadge';
+import PropTypes from 'prop-types';
+import { LineBadge, LineContainer } from '../../components/LineBadge';
+import {
+  StyledListItem,
+  InlineBadgeContainer,
+  StopCount,
+} from './Step.style';
 
 export default function Step(props) {
   const { line, destination, stopCount } = props.step;
@@ -17,18 +21,10 @@ export default function Step(props) {
   );
 }
 
-const InlineBadgeContainer = styled.div`
-  display: flex;
-  margin: 0 4px;
-`;
-const StyledListItem = styled(ListItem)`
-  && {
-    justify-content: space-between;
-    font-size: 14px;
-  }
-`;
-
-const StopCount = styled.span`
-  font-size: 12px;
-  color: #555;
-`;
+Step.propTypes = {
+  step: PropTypes.shape({
+    line: PropTypes.string.isRequired,
+    destination: PropTypes.string.isRequired,
+    stopCount: PropTypes.number.isRequired,
+  }).isRequired,
+}
