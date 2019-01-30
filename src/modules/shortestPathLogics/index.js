@@ -3,7 +3,6 @@ import stationMap from './initializeData';
 import { Weight } from '../../constants/heuristicValue';
 
 export default function findShortestRoute(startingStation, destinationStation) {
-  // currently can't connect all MRT line to Jurong lines and all LRTs
   const paths = dijkstra(stationMap, startingStation, destinationStation);
   /**
    * paths is an array of possible routes

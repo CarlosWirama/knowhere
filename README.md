@@ -2,8 +2,6 @@
 A single page web-app for Singapore MRT Routing (currently only works with future MRT routes*)
 Created using Create React App
 
-(*) doesn't support LRT lines and Jurong MRT lines yet
-
 <br>
 
 Tech-stack:
@@ -13,16 +11,16 @@ Tech-stack:
 
 Supporting libraries:
 - styled-components
-- material-ui
+- Material-ui
+- Jest
 
 <br>
 
-I'm not using Redux (yet) because this app is still small and can be handled by built-in React state manager. I implemented Dijkstra algorithm from scratch (instead of using library from somewhere else) to get a better understanding about how Dijkstra works.
+I'm not using Redux (yet) because this app is still small and can be handled by built-in React state manager. I implemented Dijkstra algorithm from scratch (instead of using library from somewhere else) to get a better understanding about how Dijkstra works. I only got to write unit test for routing algorithm, will add some more later.
 
 <br>
 
 TODO:
-- unit tests
 - fix bug when routing Choa Chu Kang -> Marine Terrace (duplicate route)
 - Add recent search
 - Welcome Page
