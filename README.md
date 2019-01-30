@@ -23,9 +23,9 @@ I'm not using Redux (yet) because this app is still small and can be handled by 
 
 TODO:
 - Sort route options based on efficiency (currently not sorted at all)
-- Add suggestion on InputText, validate on wrong station name
 - unit tests
 - define component's propTypes
+- fix bug when routing Choa Chu Kang -> Marine Terrace
 - Add recent search
 - Add support for LRTs and Jurong MRT lines
 - Welcome Page

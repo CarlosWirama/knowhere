@@ -60,8 +60,7 @@ export default class App extends Component {
 }
 
 const Home = styled.div`
-  // display: flex;
-  // height: 100vh;
-  // flex-direction: column;
-  // justify-content: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 `;

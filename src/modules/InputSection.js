@@ -12,6 +12,7 @@ export default class InputSection extends React.PureComponent {
     this.state = {
       startingStation: '',
       destinationStation: '',
+      error: null,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -21,11 +22,14 @@ export default class InputSection extends React.PureComponent {
   onChange(selectedItem, componentProps) {
     const { value } = selectedItem;
     const { name: inputName } = componentProps;
-    this.setState({ [inputName]: value });
+    this.setState({ [inputName]: value, error: null });
   }
   
   onSubmit() {
     const { startingStation, destinationStation } = this.state;
+    if (!startingStation || !destinationStation) {
+      return this.setState({ error: 'EMPTY_ENTRY' });
+    }
     this.props.submitAction(startingStation, destinationStation);
   }
 
@@ -38,9 +42,11 @@ export default class InputSection extends React.PureComponent {
   setDestinationInputRef = ref => this.destInput = ref;
 
   render() {
-    console.log(this.state)
     return (
       <Container onClick={this.props.onClick}>
+        <Header>
+          Search for MRT routes
+        </Header>
         <InputField
           label="Starting station"
           name="startingStation"
@@ -48,6 +54,7 @@ export default class InputSection extends React.PureComponent {
           value={this.state.startingStation}
           collapsed={this.props.collapsed}
           onKeyPress={e => e.key === 'Enter' && this.destInput.focus()}
+          error={this.state.error && !this.state.startingStation}
         />
         <InputField
           label="Destination station"
@@ -57,10 +64,11 @@ export default class InputSection extends React.PureComponent {
           collapsed={this.props.collapsed}
           setRef={this.setDestinationInputRef}
           onKeyPress={e => e.key === 'Enter' && this.onSubmit()}
+          error={this.state.error && !this.state.destinationStation}
         />
         { !this.props.collapsed &&
           <PrimaryButton fullWidth onClick={this.onClick}>
-            Go
+            GO!
           </PrimaryButton>
         }
       </Container>
@@ -83,7 +91,7 @@ function InputField(props) {
         { props.collapsed && <ReadOnlyValue>{props.value}</ReadOnlyValue> }
       </InputFieldText>
       { !props.collapsed &&
-        <StationInput
+        <StyledSelect
           name={props.name}
           options={options}
           defaultValue={defaultValue}
@@ -91,6 +99,7 @@ function InputField(props) {
           placeholder={Text.SEARCH_PLACEHOLDER}
           onKeyPress={props.onKeyPress}
           inputRef={props.setRef}
+          error={props.error}
         />
       }
     </InputFieldContainer>
@@ -102,8 +111,14 @@ InputSection.propTypes = {
 }
 
 const Container = styled.div`
-  background-color: lightblue;
+  background-color: #fffbca;
   padding: 32px 16px;
+  z-index: 2;
+`;
+
+const Header = styled.h4`
+  margin: 0 0 32px;
+  text-align: center;
 `;
 
 const Label = styled.div`
@@ -122,22 +137,27 @@ const InputFieldText = styled.div`
   margin: 8px 0;
 `;
 
-const StationInput = styled(Select)`
-  width: calc(100% - 16px);
-  border: solid gray .2px;
-  padding: 8px;
-`;
-
 const InputFieldContainer = styled.div`
   width: 70vw;
   margin: 0 auto;
-  padding-bottom: ${props => props.collapsed ? '8px' : '32px'};
+  padding-bottom: ${props => props.collapsed ? '8px' : '16px'};
   transition-duration: 150ms;
+`;
+
+const StyledSelect = styled(Select)`
+  div {
+    ${props => props.error && 'border-color: red;'}
+  }
 `;
 
 const PrimaryButton = styled(Button).attrs({
   variant: 'contained',
-  color: 'primary',
 })`
-  height: 48px;
+  && {
+    height: 48px;
+    margin-top: 16px;
+    background-color: #30aabc;
+    color: white;
+    font-weight: bold;
+  }
 `;

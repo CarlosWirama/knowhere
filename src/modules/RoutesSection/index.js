@@ -9,16 +9,19 @@ export default class RoutesSection extends React.Component {
   render() {
     return (
       <Container>
-        <List subheader={<ListSubheader>{Text.LIST_HEADER}</ListSubheader>}>
-          {this.props.routeOptions.map((option, i) =>
-            <OptionExpandable
-              option={option}
-              expanded={this.props.expandedIndex === i}
-              onClick={() => this.props.onClickExpandable(i)}
-              key={i}
-            />
-          )}
-        </List>
+        <StyledList>
+          <StyledListSubheader>{Text.LIST_HEADER}</StyledListSubheader>
+          <div>
+            {this.props.routeOptions.map((option, i) =>
+              <OptionExpandable
+                option={option}
+                expanded={this.props.expandedIndex === i}
+                onClick={() => this.props.onClickExpandable(i)}
+                key={i}
+              />
+            )}
+          </div>
+        </StyledList>
       </Container>
     );
   }
@@ -30,5 +33,19 @@ RoutesSection.propTypes = {
 
 const Container = styled.div`
   // background-color: #fafafa;
-  padding: 16px;
+  padding: 0 16px 16px;
+  flex: 1;
+  overflow: scroll;
+`;
+
+const StyledList = styled(List)`
+  && {
+    padding-top: 0;    
+  }
+`;
+
+const StyledListSubheader = styled(ListSubheader)`
+  && {
+    background-color: white;
+  }
 `;
