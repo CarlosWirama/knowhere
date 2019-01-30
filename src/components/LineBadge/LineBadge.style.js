@@ -38,9 +38,9 @@ function getLineColor(lineCode) {
     case 'CE': return '#f2ad27';
     case 'DT': return '#0354a6';
     case 'TE': return '#784008';
-    // case 'JS': return '#a8a8a8';
-    // case 'JW': return '#a8a8a8';
-    // case 'JE': return '#a8a8a8';
+    case 'JS': return '#0099aa';
+    case 'JW': return '#0099aa';
+    case 'JE': return '#0099aa';
     // case 'BP': return '#a8a8a8';
     // case 'SW': return '#a8a8a8';
     // case 'SE': return '#a8a8a8';

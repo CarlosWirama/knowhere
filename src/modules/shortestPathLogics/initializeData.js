@@ -51,9 +51,14 @@ function findAdjacent(stationCode) {
   const adjacent = [];
   Object.keys(stationCode).forEach(lineCode => {
     const stationNo = stationCode[lineCode];
-    findAdjacentInLine(lineCode, stationNo, adjacent);
+    // note that 'stationNo' params could be an array, e.g. { BP: [1, 14] }
+    if (Array.isArray(stationNo)) {
+      stationNo.forEach(no => findAdjacentInLine(lineCode, no, adjacent));
+    } else {
+      findAdjacentInLine(lineCode, stationNo, adjacent);
+    }
   });
-  // adjacent.push(...findSpecialAdjacent(stationCode));
+  findSpecialAdjacent(stationCode, adjacent);
   return adjacent;
 }
 
@@ -78,9 +83,12 @@ function findAdjacentInLine(line, no, builtAdjacent) {
   }
 }
 
-// function findSpecialAdjacent() {
-//   // TODO: special adjacent, for example:
-//   // 'Gek Poh' JW1 is adjacent with 'Bahar Junction' JS7
-//   // please see Jurong Area MRT
-//   return [];
-// }
+function findSpecialAdjacent(stationCode, builtAdjacent) {
+  // 'Gek Poh' JW1 is adjacent with 'Bahar Junction' JS7
+  // these adjacent can't be done by logic and must be implemented hardcodedly
+  // please see Jurong Area MRT
+  if (stationCode.JS === 7) builtAdjacent.push({ line: 'JW', name: 'Gek Poh'});
+  if (stationCode.JS === 3) builtAdjacent.push({ line: 'JE', name: 'Tengah Plantation' });
+  if (stationCode.JE === 1) builtAdjacent.push({ line: 'JE', name: 'Tengah' });
+  if (stationCode.JW === 1) builtAdjacent.push({ line: 'JW', name: 'Bahar Junction' });
+}

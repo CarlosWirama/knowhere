@@ -22,13 +22,10 @@ I'm not using Redux (yet) because this app is still small and can be handled by 
 <br>
 
 TODO:
-- exclude JW JE etc.
 - unit tests
-- fix bug when routing Choa Chu Kang -> Marine Terrace
+- fix bug when routing Choa Chu Kang -> Marine Terrace (duplicate route)
 - Add recent search
-- Add support for LRTs and Jurong MRT lines
 - Welcome Page
-- Fix overlapping line to display properly (e.g. City Hall to Raffles Place)
 
 ## =============== README from Create React App ===============
 

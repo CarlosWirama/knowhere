@@ -2,7 +2,6 @@ export default function dijkstra(graph, startNode, endNode) {
   const distances = { [startNode]: 0 };
   const prevs = {};
   let destinationReached = false;
-  let shortestDistance = 999; // For testing purpose
   do {
     // TODO: instead of relying on lowest distance,
     // we can just iterate all the neighbor we have from source node
@@ -12,7 +11,6 @@ export default function dijkstra(graph, startNode, endNode) {
       // TODO make threshold to allow searching for less efficient routes
       // e.g. ~3 stops
       destinationReached = true;
-      shortestDistance = distances[currentNodeName]; // For testing purpose
     }
     findNeighborNodes(graph, currentNodeName, prevs).forEach(neighbor => {
       // If you're from Chinatown , you can take either NE-EW or DT-CC to Paya Lebar
@@ -25,13 +23,11 @@ export default function dijkstra(graph, startNode, endNode) {
       neighborsPreviousStations.push(newNeighborsPreviousStation);
     });
     delete distances[currentNodeName]; // dont do this if we want to have some less efficient routes
-  } while(!destinationReached && Object.keys(prevs).length < 200);
-  if (!destinationReached) throw 'Destination not reached'; // For testing
+  } while(!destinationReached && Object.keys(prevs).length < 200); // avoid infinite-loop
   const builtRoutes = [];
   const initialPath = [];
   builtRoutes.push(initialPath);
   tracePath(prevs, endNode, builtRoutes, initialPath);
-  // if (shortestDistance !== path.length) throw `the result is different from path : Expected ${shortestDistance}. Path: ${path}`; // For testing
   return builtRoutes;
 }
 
