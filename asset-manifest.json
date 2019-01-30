@@ -1,13 +1,13 @@
 {
   "main.css": "/knowhere/static/css/main.ed6bab91.chunk.css",
-  "main.js": "/knowhere/static/js/main.f03644db.chunk.js",
-  "main.js.map": "/knowhere/static/js/main.f03644db.chunk.js.map",
-  "static/js/1.62d7a4a5.chunk.js": "/knowhere/static/js/1.62d7a4a5.chunk.js",
-  "static/js/1.62d7a4a5.chunk.js.map": "/knowhere/static/js/1.62d7a4a5.chunk.js.map",
+  "main.js": "/knowhere/static/js/main.f057ae88.chunk.js",
+  "main.js.map": "/knowhere/static/js/main.f057ae88.chunk.js.map",
+  "static/js/1.1e7988e9.chunk.js": "/knowhere/static/js/1.1e7988e9.chunk.js",
+  "static/js/1.1e7988e9.chunk.js.map": "/knowhere/static/js/1.1e7988e9.chunk.js.map",
   "runtime~main.js": "/knowhere/static/js/runtime~main.2f82e59d.js",
   "runtime~main.js.map": "/knowhere/static/js/runtime~main.2f82e59d.js.map",
   "static/css/main.ed6bab91.chunk.css.map": "/knowhere/static/css/main.ed6bab91.chunk.css.map",
   "index.html": "/knowhere/index.html",
-  "precache-manifest.b611b198696d35f7a9b52f99288d4a55.js": "/knowhere/precache-manifest.b611b198696d35f7a9b52f99288d4a55.js",
+  "precache-manifest.84bd560ac39a41f0a03207b4bb59939b.js": "/knowhere/precache-manifest.84bd560ac39a41f0a03207b4bb59939b.js",
   "service-worker.js": "/knowhere/service-worker.js"
 }
