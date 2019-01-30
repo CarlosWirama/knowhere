@@ -1,9 +1,8 @@
 ## Project codename: knowhere
 A single page web-app for Singapore MRT Routing (only for future MRT routes)
-* Please note that this layout is optimized for mobile ratio, and not yet optimized for desktop
-Sorted by the most convenient first (less interchange) rather than least stop
-(https://github.com/CarlosWirama/knowhere/blob/master/src/constants/heuristicValue.js)
-Created using Create React App
+* Created using Create React App
+* Please note that the layout is optimized for mobile ratio, and not yet optimized for desktop
+* Route sorted by the most convenient first (less interchange) rather than least stop
 
 <br>
 
