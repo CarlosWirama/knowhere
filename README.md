@@ -3,6 +3,7 @@ A single page web-app for Singapore MRT Routing (only for future MRT routes)
 * Created using Create React App
 * Please note that the layout is optimized for mobile ratio, and not yet optimized for desktop
 * Route sorted by the most convenient first (less interchange) rather than least stop
+* Live demo at https://carloswirama.github.io/knowhere/
 
 <br>
 
