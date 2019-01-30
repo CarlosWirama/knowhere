@@ -22,7 +22,7 @@ I'm not using Redux (yet) because this app is still small and can be handled by 
 <br>
 
 TODO:
-- Sort route options based on efficiency (currently not sorted at all)
+- exclude JW JE etc.
 - unit tests
 - fix bug when routing Choa Chu Kang -> Marine Terrace
 - Add recent search

@@ -1,15 +1,30 @@
 import dijkstra from './dijkstra';
 import stationMap from './initializeData';
+import { Weight } from '../../constants/heuristicValue';
 
 export default function findShortestRoute(startingStation, destinationStation) {
   // currently can't connect all MRT line to Jurong lines and all LRTs
   const paths = dijkstra(stationMap, startingStation, destinationStation);
-  return paths.map( path => {
+  /**
+   * paths is an array of possible routes
+   * routes is an array of stations forming a path
+   * station is an object contains destination and which line we should take
+   * paths: [
+      0: [
+        0: { destination: "Khatib", line: "NS" },
+        1: { destination: "Yishun", line: "NS" },
+        2: { destination: "Canberra", line: "NS" },
+      ],
+      1: [ ...etc ],
+    ]
+   **/
+  const restructuredPaths = paths.map( path => {
     const route = {
       lines: [],
       stopCount: path.length,
       interchangeCount: -1,
       steps: [],
+      heuristicValue: 0,
     };
     let previousLine = '';
     while(path.length) {
@@ -24,8 +39,7 @@ export default function findShortestRoute(startingStation, destinationStation) {
             .filter(line => -1 !== splittedPreviousLine.indexOf(line));
           if (intersects.length) { // still in the same line, no need to interchange
             addSteps(route, destination);
-            // it works for current MRT line,
-            // unless if there's another wierd overlapping lines in the future
+            // update the recorded lines to match only 1 line
             route.lines[route.lines.length -1] = intersects[0];
             route.steps[route.steps.length - 1].line = intersects[0];
             previousLine = intersects[0];
@@ -41,9 +55,13 @@ export default function findShortestRoute(startingStation, destinationStation) {
         addSteps(route, destination);
       }
     }
+    // count overall heuristicValue based on weights in heuristicValue.js
+    route.heuristicValue = route.stopCount * Weight.STOP
+      + route.interchangeCount * Weight.INTERCHANGE;
     return route;
-    // TODO: sort based on best route
   });
+  // sort by heuristicValue
+  return restructuredPaths.sort((a, b) => a.heuristicValue - b.heuristicValue);
 }
 
 function addSteps(route, destination) {

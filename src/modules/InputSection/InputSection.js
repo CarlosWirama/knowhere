@@ -18,7 +18,6 @@ export default class InputSection extends React.PureComponent {
   }
 
   onChange(selectedItem, componentProps) {
-    console.log('click')
     const { value } = selectedItem;
     const { name: inputName } = componentProps;
     this.setState({ [inputName]: value, error: null });
